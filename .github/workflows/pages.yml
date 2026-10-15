@@ -20,6 +20,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: kaaariyaaa/Apex-Legends-Sensitivity-Converter
+          ref: main
+          path: legacy-converter
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -34,6 +39,10 @@ jobs:
           ASTRO_OUT_DIR: ./dist/apex-launch-option-builder
           PUBLIC_GA_MEASUREMENT_ID: ${{ vars.PUBLIC_GA_MEASUREMENT_ID }}
         run: npm run build
+      - name: Publish the sensitivity converter
+        run: |
+          mkdir -p dist/Apex-Legends-Sensitivity-Converter
+          cp legacy-converter/index.html legacy-converter/script.js legacy-converter/style.css dist/Apex-Legends-Sensitivity-Converter/
       - name: Add custom domain
         run: printf 'kariya.dev\n' > dist/CNAME
       - uses: actions/configure-pages@v5
