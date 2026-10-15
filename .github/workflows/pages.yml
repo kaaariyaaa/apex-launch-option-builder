@@ -1,26 +1,16 @@
-name: Build and deploy to GitHub Pages
+name: Build
 
 on:
   push:
+  pull_request:
   workflow_dispatch:
-  schedule:
-    - cron: '17 18 * * *'
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: pages
-  cancel-in-progress: true
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -31,21 +21,4 @@ jobs:
         with:
           python-version: '3.x'
       - run: npm ci
-      - name: Prepare option data
-        run: python3 scripts/prepare-data.py
-      - name: Update option rankings
-        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
-        env:
-          GA4_PROPERTY_ID: ${{ secrets.GA4_PROPERTY_ID }}
-          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
-        run: npm run rankings
-      - name: Build site
-        env:
-          PUBLIC_GA_MEASUREMENT_ID: ${{ vars.PUBLIC_GA_MEASUREMENT_ID }}
-        run: npm run build
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: dist
-      - id: deployment
-        uses: actions/deploy-pages@v4
+      - run: npm run build
