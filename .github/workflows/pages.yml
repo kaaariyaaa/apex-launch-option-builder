@@ -1,12 +1,19 @@
-name: Build
+name: Deploy GitHub Pages
 
 on:
   push:
+    branches: [main]
   pull_request:
   workflow_dispatch:
 
 permissions:
   contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages-${{ github.event_name == 'pull_request' && github.event.pull_request.number || 'production' }}
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -21,4 +28,25 @@ jobs:
         with:
           python-version: '3.x'
       - run: npm ci
-      - run: npm run build
+      - name: Build the site
+        env:
+          ASTRO_BASE_PATH: /apex-launch-option-builder/
+          ASTRO_OUT_DIR: ./dist/apex-launch-option-builder
+          PUBLIC_GA_MEASUREMENT_ID: ${{ vars.PUBLIC_GA_MEASUREMENT_ID }}
+        run: npm run build
+      - name: Add custom domain
+        run: printf 'kariya.dev\n' > dist/CNAME
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+  deploy:
+    if: github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
