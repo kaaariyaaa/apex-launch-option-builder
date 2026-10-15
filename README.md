@@ -13,7 +13,7 @@ Set `PUBLIC_GA_MEASUREMENT_ID` to enable anonymous GA4 events. Copying a command
 
 ## GitHub Pages
 
-This repository deploys to [kariya.dev/apex-launch-option-builder](https://kariya.dev/apex-launch-option-builder/). The workflow builds the app into the matching subdirectory and configures `kariya.dev` as its custom domain.
+This repository deploys the builder to [kariya.dev/apex-launch-option-builder](https://kariya.dev/apex-launch-option-builder/) and the original sensitivity converter to [kariya.dev/Apex-Legends-Sensitivity-Converter](https://kariya.dev/Apex-Legends-Sensitivity-Converter/).
 
 The optional ranking updater requires `GA4_PROPERTY_ID` and `GOOGLE_SERVICE_ACCOUNT_JSON`. Its query counts unique GA4 active users from 2020-01-01 through yesterday; GA4 identity and retention settings prevent a guarantee of permanent exact deduplication.
 
