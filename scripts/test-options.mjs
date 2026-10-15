@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { valid, renderOption } from '../src/lib/options.ts';
+import { inputType, parseRankings, valid, renderOption } from '../src/lib/options.ts';
 
 const options = JSON.parse(await readFile(new URL('../public/data/registrations.json', import.meta.url)));
 const get = (name) => options.find((option) => option.name === name);
@@ -16,6 +16,10 @@ assert.equal(renderOption(get('+exec'), 'my config.cfg'), '+exec "my config.cfg"
 assert.equal(renderOption(get('+exec'), '$&'), '+exec $&');
 assert.equal(valid('bad\n+exec bad', get('+exec')), false);
 assert.equal(valid('a"b', get('+exec')), false);
+assert.equal(inputType(get('-forcedAffinity')), 'text');
+assert.equal(valid('0xff', get('-forcedAffinity')), true);
+assert.deepEqual(parseRankings('{"rankings":[{"id":"fps","users":2},null,{"id":3,"users":1}]}'), [{ id: 'fps', users: 2 }]);
+assert.deepEqual(parseRankings('{'), []);
 assert.equal(valid('', get('+break')), true);
 assert.equal(renderOption(get('+break'), ''), '+break');
 const emptyString = options.find((option) => option.value_kind.includes('空値可'));
