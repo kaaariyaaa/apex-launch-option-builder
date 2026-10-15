@@ -22,6 +22,9 @@ class CatalogTest(unittest.TestCase):
         self.assertTrue(by_name['+break']['uncertain'])
         self.assertEqual(by_name['+ssao_downsample_scale']['default'], '')
         self.assertEqual(by_name['+ssao_downsample_scale']['defaults'], ['1.f'])
+        for name in ('+party_privacy', '-eac_launcher_settings'):
+            self.assertEqual(by_name[name]['default'], '')
+            self.assertTrue(by_name[name]['defaults'][0].startswith('不明'))
         self.assertTrue(all(not option['cfg'] for option in options))
         for option in options:
             if len(option['defaults']) > 1:

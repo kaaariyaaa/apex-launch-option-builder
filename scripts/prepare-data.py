@@ -52,7 +52,7 @@ def build(all_rows, candidates):
         default = candidate['既定値（静的解析・推定を含む）'] if candidate else (defaults[0] if len(defaults) == 1 else '')
         if default and default not in defaults:
             defaults.append(default)
-        value = default if len(defaults) == 1 and not default.startswith(('未', '（')) else ''
+        value = default if len(defaults) == 1 and not default.startswith(('未', '不明', '（')) else ''
         if '値不要' in kind:
             value = ''
         uncertain = any(word in kind for word in ('不明', '引数形式未確認'))

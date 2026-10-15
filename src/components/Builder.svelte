@@ -34,11 +34,11 @@
   onMount(async () => {
     try {
       const [optionsResponse, rankingResponse] = await Promise.all([
-        fetch(`${base}data/registrations.json`), fetch(`${base}data/option-rankings.json`)
+        fetch(`${base}data/registrations.json`), fetch(`${base}data/option-rankings.json`).catch(() => null)
       ]);
       if (!optionsResponse.ok) throw new Error('オプションデータを読み込めませんでした');
       options = await optionsResponse.json();
-      if (rankingResponse.ok) {
+      if (rankingResponse?.ok) {
         try { rankings = parseRankings(await rankingResponse.text()); }
         catch { rankings = []; }
       }
