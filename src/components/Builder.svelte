@@ -104,7 +104,7 @@
             {#each matches as option (option.id)}
               {@const isSelected = selected.some((item) => item.id === option.id)}
               <button class="option-item" class:selected={isSelected} on:click={(event) => event.detail === 0 && toggleOption(option)} on:dblclick={() => toggleOption(option)} aria-label={`${option.name}、ダブルクリックで${isSelected ? '解除' : '有効化'}` }>
-                <span class="option-text"><span class="option-name">{option.name}{#if !option.candidate}<span class="badge">候補対象外</span>{/if}{#if isSelected}<span class="badge">選択中</span>{/if}</span><small>{option.description || option.category || '説明なし'}</small></span><code>{option.defaults.length > 1 ? '複数' : option.default || '—'}</code>
+                <span class="option-text"><span class="option-name">{option.name}{#if !option.candidate}<span class="badge">候補対象外</span>{/if}{#if isSelected}<span class="badge">選択中</span>{/if}</span><small>{option.description || option.category || '説明なし'}</small></span><code>{option.defaults.length > 1 ? '複数' : option.default || option.defaults[0] || '—'}</code>
               </button>
             {/each}
           {/if}
