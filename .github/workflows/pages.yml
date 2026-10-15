@@ -43,7 +43,7 @@ jobs:
         env:
           ASTRO_BASE_PATH: /apex-launch-option-builder/
           ASTRO_OUT_DIR: ./dist/apex-launch-option-builder
-          PUBLIC_GA_MEASUREMENT_ID: ${{ vars.PUBLIC_GA_MEASUREMENT_ID }}
+          PUBLIC_GA_MEASUREMENT_ID: ${{ vars.PUBLIC_GA_MEASUREMENT_ID || 'G-3FTLSHBMW6' }}
         run: npm run build
       - name: Publish the sensitivity converter
         run: |
