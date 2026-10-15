@@ -38,6 +38,7 @@ jobs:
         with:
           python-version: '3.x'
       - run: npm ci
+      - run: npm test
       - name: Build the site
         env:
           ASTRO_BASE_PATH: /apex-launch-option-builder/
