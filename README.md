@@ -9,12 +9,12 @@ npm ci
 npm run dev
 ```
 
-Set `PUBLIC_GA_MEASUREMENT_ID` to enable anonymous GA4 events. Copying a command sends one `option_copy` event per included option. GitHub Actions periodically exports the GA4 `activeUsers` count per option as the popularity ranking.
+Set `PUBLIC_GA_MEASUREMENT_ID` to enable anonymous GA4 events. Copying a command sends one `option_copy` event per included option.
 
-## GitHub Pages and rankings
+## Publishing
 
-Set the repository's `PUBLIC_GA_MEASUREMENT_ID` variable and `GA4_PROPERTY_ID` and `GOOGLE_SERVICE_ACCOUNT_JSON` secrets. Enable GitHub Pages with GitHub Actions as the source. The workflow prepares the option registry, refreshes rankings, then builds and deploys the static site.
+The current build is published at [kariya.dev/apex-launch-option-builder](https://kariya.dev/apex-launch-option-builder/) through the Pages workflow in `kaaariyaaa/Apex-Legends-Sensitivity-Converter`. This repository's workflow checks the build; it does not deploy Pages. The published site is a static snapshot, so source changes must be rebuilt and copied to the hosting repository to go live.
 
-The ranking query spans from 2020-01-01 through yesterday and counts unique GA4 active users per option over that range. This is the closest static-site approximation to lifetime unique users; GA4 identity, retention settings, and the configured start date mean it cannot guarantee permanent exact deduplication.
+The optional ranking updater requires `GA4_PROPERTY_ID` and `GOOGLE_SERVICE_ACCOUNT_JSON`. Its query counts unique GA4 active users from 2020-01-01 through yesterday; GA4 identity and retention settings prevent a guarantee of permanent exact deduplication.
 
 The source CSV is a static registration dump, not a verified list of launch arguments. Recommendation metadata and CFG support must be curated when evidence is available.
