@@ -11,7 +11,7 @@ npm run dev
 
 Set `PUBLIC_GA_MEASUREMENT_ID` to enable anonymous GA4 events. Copying a command sends one `option_copy` event per included option.
 
-Search analytics records only the result count; the entered search text is not sent. Generated launch options are intended for the game's launch-options field, not for execution by a shell. To reduce accidental interpretation, values containing quotes, $, `, & | < > parentheses, semicolons, Windows %/!/^ expansion characters, or line breaks are rejected. Spaces remain supported and are quoted for known argument formats. Shell escaping differs between Windows and Linux, so shell command execution is not supported.
+Search analytics records only the result count; the entered search text is not sent. Generated launch options are intended for the game's launch-options field, not for execution by a shell. To reduce accidental interpretation, values containing quotes, $, `, |, <, >, parentheses, semicolons, Windows %/!/^ expansion characters, or line breaks are rejected. Ampersands are allowed only in key-value query strings and are quoted with known argument formats. Spaces remain supported and are quoted for known argument formats. Shell escaping differs between Windows and Linux, so shell command execution is not supported.
 
 ## GitHub Pages
 
