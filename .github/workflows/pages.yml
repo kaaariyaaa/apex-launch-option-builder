@@ -8,8 +8,6 @@ on:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
   group: pages-${{ github.event_name == 'pull_request' && github.event.pull_request.number || 'production' }}
@@ -23,7 +21,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: kaaariyaaa/Apex-Legends-Sensitivity-Converter
-          ref: main
+          ref: 982f5d90d50dd1dc1a04a600c5a1915619425019
           path: legacy-converter
           sparse-checkout: |
             index.html
@@ -59,6 +57,9 @@ jobs:
     if: github.event_name != 'pull_request'
     needs: build
     runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
