@@ -75,7 +75,7 @@
   }
   function update(index: number, value: string) { selected = selected.map((item, i) => i === index ? { ...item, value } : item); }
   function reportSearch() {
-    if (query.trim()) ga?.('event', 'view_search_results', { search_term: query.trim(), result_count: visibleOptions.length });
+    if (query.trim()) ga?.('event', 'view_search_results', { result_count: visibleOptions.length });
   }
   async function copyCommand() {
     copyError = '';
@@ -124,7 +124,7 @@
                   {#if !option.value_kind.startsWith('文字列') && option.value_kind.includes('0/1')}
                     <label class="value-field"><span>ON / OFF</span><select value={item.value} on:change={(event) => update(index, event.currentTarget.value)}><option value="" disabled>値を選択</option><option value="1">ON</option><option value="0">OFF</option></select></label>
                   {:else}{@const fieldType = inputType(option)}<label class="value-field"><span>{option.uncertain ? '引数部分（不要なら空欄）' : option.value_kind}{option.min_bound ? ` · ${option.min_bound}〜${option.max_bound || '上限なし'}` : ''}</span><input class:invalid={!valid(item.value, option)} type={fieldType} step={option.value_kind.includes('整数') && fieldType === 'number' ? '1' : 'any'} min={option.min_bound || undefined} max={option.max_bound || undefined} placeholder="値を入力" value={item.value} on:input={(event) => update(index, event.currentTarget.value)} /></label>{/if}
-                  {#if !valid(item.value, option)}<small class="field-error">{item.value.trim() ? '入力形式を確認してください（改行・引用符・セミコロンは使用できません）。' : '値を入力してください。'}</small>{/if}
+                  {#if !valid(item.value, option)}<small class="field-error">{item.value.trim() ? '入力形式を確認してください（改行・引用符・シェル記号は使用できません）。' : '値を入力してください。'}</small>{/if}
                 {:else}<p class="no-value">この項目に値はありません</p>{/if}
               </article>
             {/each}
