@@ -15,7 +15,7 @@ assert.equal(renderOption(get('-affinity='), '0xff'), '-affinity=0xff');
 assert.equal(renderOption(get('+exec'), 'my config.cfg'), '+exec "my config.cfg"');
 assert.equal(valid('bad\n+exec bad', get('+exec')), false);
 assert.equal(valid('a"b', get('+exec')), false);
-for (const value of ['$()', '`id`', '&', '|', '<', '>', ';']) assert.equal(valid(value, get('+exec')), false, `${value} must be rejected`);
+for (const value of ['$()', '`id`', '&', '|', '<', '>', ';', "'", '%PATH%', '!var!', '^']) assert.equal(valid(value, get('+exec')), false, `${value} must be rejected`);
 assert.equal(valid('my config.cfg', get('+exec')), true);
 assert.equal(inputType(get('-forcedAffinity')), 'text');
 assert.equal(valid('0xff', get('-forcedAffinity')), true);
